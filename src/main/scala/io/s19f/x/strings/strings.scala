@@ -11,6 +11,6 @@ package object strings {
 
   }
 
-  implicit def ops(s: String) = new StringOps(s)
+  implicit def stringOps(s: String) = new StringOps(s)
 
 }
