@@ -1,7 +1,10 @@
 package io.s19f.smoothy.format
 
+/**
+  * One responsible for formatting texts in markdown
+  */
 object md {
-    
+
   def listItem(text: String) = "- " + text
 
   def listItems(texts: Traversable[String]) =

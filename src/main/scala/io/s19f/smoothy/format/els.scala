@@ -3,6 +3,10 @@ package io.s19f.smoothy.format
 import io.s19f.x.strings._
 import org.jsoup.nodes.Element
 
+
+/**
+  * One responsible for formatting elements
+  */
 object els {
 
   def listItem(el: Element) = {
