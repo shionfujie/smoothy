@@ -32,7 +32,8 @@ object wikipedia {
   def overview = {
     val els = for {
       h        <- mainContent.$$("h2:not(#mw-toc-heading),h3")
-      if !"""^(:?References|Further reading|Bibliography|Notes)""".r.test(h.text.trim)
+      if !"""^(:?References|Further reading|Bibliography|Notes)""".r
+        .test(h.text.trim)
       listItems = for {
         el <- h.nextElementSiblings
           .takeWhile(! $("h2,h3")(h))
