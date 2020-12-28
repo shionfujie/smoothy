@@ -25,17 +25,23 @@ object originals {
     md.listItems(chapters :+ anomaly)
   }
 
+  import Jsoup._
+  lazy val first = parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_000.html")
+
+  /** A chapter may consists of several split documents
+    */
+  lazy val chapter = Stream(
+    first,
+    parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_001.html"),
+    parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_002.html"),
+    parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_003.html"),
+    parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_004.html")
+  )
+
   def creativeDestruction = {
-    import Jsoup._
-    val first    = parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_000.html")
+
     val headings = for {
-      doc <- Stream(
-        first,
-        parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_001.html"),
-        parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_002.html"),
-        parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_003.html"),
-        parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_004.html")
-      )
+      doc <- chapter
       h   <- doc.$$("h2.x05-Head-A")
     } yield h
 
@@ -46,7 +52,14 @@ object originals {
     title + "\n" +
       epigraph + "\n" +
       els.listItems(headings) + "\n"
-
   }
 
+  private val fmt = els
+  def creativeDestructionSummary = {
+    val els = for {
+      doc <- chapter
+      el  <- doc.$$("h2.x05-Head-A,p.x03-CO-Body-Text,p.x04-Body-Text")
+    } yield el
+    fmt.listItems(els)
+  }
 }

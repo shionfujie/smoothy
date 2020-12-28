@@ -7,7 +7,7 @@ import org.jsoup.nodes.Element
   */
 object els {
 
-  def listItem(el: Element) = 
+  def listItem(el: Element) =
     el2text _ andThen md.listItem _
 
   def listItems(els: Traversable[Element]) =
@@ -20,11 +20,12 @@ object els {
     els.map(_.text.trim.sentences(0)).mkString("\n")
 
   private def el2text(el: Element) = {
-    var title = el.text.trim.title
-    if (el.normalName == "a") {
-      title = md.link(title, el.absUrl("href"))
+    val title = el.text.trim.title
+    el.normalName match {
+      case "a" => md.link(title, el.absUrl("href"))
+      case "p" => el.text.trim.sentences(0)
+      case _   => title
     }
-    title
   }
 
 }
