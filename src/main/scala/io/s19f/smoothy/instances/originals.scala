@@ -11,9 +11,18 @@ import io.s19f.smoothy.jsoup.nodes._
 import io.s19f.smoothy.jsoup.select.Evaluators._
 
 object originals {
-    lazy val document = Jsoup.parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0004.html")
+  lazy val document = Jsoup.parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0004.html")
 
-    def toc = {
-        els.listItems(document.$$("p.x01-FM-Contents-CT,p.x01-FM-Contents-A-Head, p.x01-FM-Contents-FM-Head"))
-    }
+  def toc = {
+    val chapters = document
+      .$$("p.x01-FM-Contents-CT")
+      .map(chapter => {
+        val title    = chapter.text.trim
+        val subtitle = chapter.nextElementSibling.text.trim
+        title + "\n" + subtitle
+      })
+    val anomaly  = document.$("""p.x01-FM-Contents-FM-Head:matches(^\s*Actions for Impact\s*$)""").text.trim
+    md.listItems(chapters :+ anomaly)
+  }
+
 }
