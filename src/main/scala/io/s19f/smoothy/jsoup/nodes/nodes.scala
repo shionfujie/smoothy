@@ -4,7 +4,9 @@ package jsoup
 
 package object nodes {
 
+  import scala.collection.JavaConverters._
   import org.jsoup.nodes.Element
+  import org.jsoup.select.Elements
 
   class ElementOps(el: Element) {
 
@@ -22,5 +24,7 @@ package object nodes {
   }
 
   implicit def elementOps(el: Element) = new ElementOps(el)
+
+  implicit def elements2coll(els: Elements) = els.asScala
 
 }
