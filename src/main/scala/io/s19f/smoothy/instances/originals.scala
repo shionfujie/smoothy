@@ -25,4 +25,19 @@ object originals {
     md.listItems(chapters :+ anomaly)
   }
 
+  def creativeDestruction = {
+    import Jsoup._
+    val headings = for {
+      doc <- Stream(
+        parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_000.html"),
+        parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_001.html"),
+        parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_002.html"),
+        parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_003.html"),
+        parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_004.html")
+      )
+      h   <- doc.$$("h2.x05-Head-A")
+    } yield h
+    els.listItems(headings)
+  }
+
 }
