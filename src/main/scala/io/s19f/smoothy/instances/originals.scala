@@ -27,9 +27,10 @@ object originals {
 
   def creativeDestruction = {
     import Jsoup._
+    val first    = parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_000.html")
     val headings = for {
       doc <- Stream(
-        parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_000.html"),
+        first,
         parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_001.html"),
         parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_002.html"),
         parseFile("/Users/shion.t.fujie/epub/Originals How Non-Conformists Move the World by Adam Grant/text/part0006_split_003.html"),
@@ -37,7 +38,15 @@ object originals {
       )
       h   <- doc.$$("h2.x05-Head-A")
     } yield h
-    els.listItems(headings)
+
+    val title    = first.$("p.x03-Chapter-Title").text.trim
+    val epigraph = first.$("p.x03-Chapter-Epigraph-FL").text.trim + " - " +
+      first.$("p.x03-Chapter-Epigraph-Source").text.trim
+
+    title + "\n" +
+      epigraph + "\n" +
+      els.listItems(headings) + "\n"
+
   }
 
 }
