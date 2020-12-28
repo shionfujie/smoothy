@@ -17,6 +17,8 @@ package object nodes {
         .iterate(el.nextElementSibling)(_.nextElementSibling)
         .takeWhile(el => el != null)
 
+    def headings = $$("h1,h2,h3,h4,h5,h6")
+
   }
 
   implicit def elementOps(el: Element) = new ElementOps(el)
