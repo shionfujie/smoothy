@@ -1,18 +1,15 @@
 package io.s19f.smoothy.format
 
 object md {
+    
   def listItem(text: String) = "- " + text
 
   def listItems(texts: Traversable[String]) =
-    texts.map(listItem _).mkString("\n")
+    listItemsDepths(texts.map((0, _)))
 
   def listItemsDepths(els: Traversable[(Int, String)]) =
-    els
-      .map {
-        case (depth, text) =>
-          "  " * depth + listItem(text)
-      }
-      .mkString("\n")
+    (for ((depth, text) <- els) yield "  " * depth + listItem(text)).mkString("\n")
 
   def link(text: String, href: String) = s"[${text}](${href})"
+
 }

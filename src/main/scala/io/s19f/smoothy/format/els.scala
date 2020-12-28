@@ -6,19 +6,18 @@ import org.jsoup.nodes.Element
 object els {
 
   def listItem(el: Element) = {
-    val indent = "  "
-    val text   = el.text.trim.title
-    el.normalName match {
-      case "a" => md.listItem(md.link(text, el.absUrl("href")))
-      case _   => md.listItem(text)
+    var title   = el.text.trim.title
+    if (el.normalName == "a") {
+        title = md.link(title, el.absUrl("href"))
     }
+    md.listItem(title)
   }
 
   def listItems(els: Traversable[Element]) =
-    els.map(listItem _).mkString("\n")
+    listItemsDepths(els.map((0, _)))
 
   def listItemsDepths(els: Traversable[(Int, Element)]) =
-    (for { (depth, el) <- els } yield "  " * depth + listItem(el)).mkString("\n")
+    md.listItemsDepths(for { (depth, el) <- els } yield (depth, listItem(el)))
 
   def firstSentences(els: Traversable[Element])         =
     els.map(_.text.trim.sentences(0)).mkString("\n")
