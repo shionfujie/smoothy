@@ -3,6 +3,7 @@ package io.s19f
 package object smoothy {
 
   import scala.collection.generic.CanBuildFrom
+  import org.jsoup.nodes.Element
 
   val ranks = Map(
     "h1"     -> 0,

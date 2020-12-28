@@ -12,6 +12,6 @@ package object regex {
 
   }
 
-  implicit def ops(r: Regex) = new RegexOps(r)
+  implicit def regexOps(r: Regex) = new RegexOps(r)
 
 }
