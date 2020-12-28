@@ -7,13 +7,14 @@ import org.jsoup.nodes.Document
 package object jsoup {
 
   object Jsoup {
+    import org.jsoup.Jsoup.{parse, connect}
 
     def parseFile(filename: String): Document =
-      org.jsoup.Jsoup.parse(new File(filename), "UTF-8")
+      parse(new File(filename), "UTF-8")
 
     def parseURL(url: String): Document =
-      org.jsoup.Jsoup.connect(url).get
-      
+      connect(url).get
+
   }
 
 }
