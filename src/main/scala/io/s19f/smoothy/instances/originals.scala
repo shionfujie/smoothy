@@ -64,7 +64,8 @@ object originals {
     fmt.listItemsDepths(
       withDepths(els),
       {
-        case sep if sep.className == "x04-Space-Break-Orn" => "---"
+        case sep if sep.className == "x04-Space-Break-Orn" => "\n  ---"
+        case p if p.normalName == "p"                      => p.text.trim.sentences(0)
       }
     )
   }
