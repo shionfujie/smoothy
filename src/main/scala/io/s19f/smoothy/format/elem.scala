@@ -5,7 +5,7 @@ import org.jsoup.nodes.Element
 
 /** One responsible for formatting elements
   */
-object els {
+object elem {
 
   def listItem(el: Element) =
     defaultListItemFormatter
@@ -14,7 +14,7 @@ object els {
     listItemsDepths(els.map((0, _)), formatter)
 
   def listItemsDepths(els: Traversable[(Int, Element)], formatter: PartialFunction[Element, String] = Map.empty) =
-    indent(for { (depth, el) <- els } yield (depth, (formatter orElse defaultListItemFormatter)(el)))
+    indent(els, formatter orElse defaultListItemFormatter)
 
   def firstSentences(els: Traversable[Element]) =
     els.map(_.text.trim.sentences(0)).mkString("\n")
@@ -32,7 +32,7 @@ object els {
   private val defaultListItemFormatter =
     defaultFormatter andThen md.listItem
 
-  private def indent(els: Traversable[(Int, String)]) =
-    (for ((depth, text) <- els) yield "  " * depth + text).mkString("\n")
+  private def indent(els: Traversable[(Int, Element)], formatter: PartialFunction[Element, String] = Map.empty) =
+    (for ((depth, el) <- els) yield "  " * depth + (formatter orElse defaultFormatter)(el)).mkString("\n")
 
 }

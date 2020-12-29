@@ -6,7 +6,7 @@ import io.s19f.x.strings._
 import io.s19f.x.regex._
 import io.s19f.x.functions.predicates._
 import io.s19f.smoothy._
-import io.s19f.smoothy.format.{md, els}
+import io.s19f.smoothy.format.{md, elem}
 import io.s19f.smoothy.jsoup.Jsoup
 import io.s19f.smoothy.jsoup.nodes._
 import io.s19f.smoothy.jsoup.select.Evaluators._
@@ -52,15 +52,20 @@ object originals {
 
     title + "\n" +
       epigraph + "\n" +
-      els.listItems(headings) + "\n"
+      elem.listItems(headings) + "\n"
   }
 
-  private val fmt = els
+  private val fmt = elem
   def creativeDestructionSummary = {
     val els = for {
       doc <- chapter
       el  <- doc.$$("h2.x05-Head-A,p.x03-CO-Body-Text,p.x04-Body-Text,p.x04-Space-Break-Orn")
     } yield el
-    fmt.listItemsDepths(withDepths(els), { case sep if sep.className == "x04-Space-Break-Orn" => "---" })
+    fmt.listItemsDepths(
+      withDepths(els),
+      {
+        case sep if sep.className == "x04-Space-Break-Orn" => "---"
+      }
+    )
   }
 }
