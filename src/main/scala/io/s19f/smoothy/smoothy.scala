@@ -15,7 +15,8 @@ package object smoothy {
     "span"   -> 6,
     "strong" -> 6,
     "a"      -> 6,
-    "li"     -> 6
+    "li"     -> 6,
+    "p"      -> 6
   )
 
   def withDepths[Repr <: Seq[Element], That](els: Repr)(implicit cbf: CanBuildFrom[Repr, (Int, Element), That]): That = {
