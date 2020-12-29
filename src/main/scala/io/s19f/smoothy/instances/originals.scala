@@ -59,7 +59,7 @@ object originals {
   def creativeDestructionSummary = {
     val els = for {
       doc <- chapter
-      el  <- doc.$$("h2.x05-Head-A,p.x03-CO-Body-Text,p.x04-Body-Text,p.x04-Space-Break-Orn")
+      el  <- doc.$$("h2.x05-Head-A,p.x03-CO-Body-Text,p.x04-Body-Text-FL,p.x04-Body-Text,p.x04-Space-Break-Orn")
     } yield el
     fmt.listItemsDepths(
       withDepths(els),
